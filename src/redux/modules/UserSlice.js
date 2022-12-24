@@ -1,4 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+const __signIn = createAsyncThunk("signIn", async (payload, thunkAPI) => {
+  console.log(payload);
+  thunkAPI.fulfillWithValue(payload);
+});
 
 const initialState = {
   response: {},
@@ -10,7 +15,9 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase();
+    builder.addCase(__signIn.fulfilled, (state, action) => {
+      console.log(action.payload);
+    });
   },
 });
 
