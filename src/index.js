@@ -15,6 +15,10 @@ const mainTheme = {
   light: "netflixLight",
   medium: "netflixMedium",
   regular: "netflixRegular",
+  accentColor: "#ED4946",
+  mainBgColor: "#141414",
+  transparentBgColor: "rgba(42,42,42,0.6)",
+  btnBorderColor: "hsla(0,0%,100%,0.5)",
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
