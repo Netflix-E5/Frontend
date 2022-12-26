@@ -2,6 +2,26 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
+@charset "urf-8";
+
+@font-face {
+  font-family: "netflixBold";
+  src: url("assets/fonts/NetflixSans-Bold.otf");
+}
+@font-face {
+  font-family: "netflixLight";
+  src: url("assets/fonts/NetflixSans-Light.otf");
+}
+@font-face {
+  font-family: "netflixMedium";
+  src: url("assets/fonts/NetflixSans-Medium.otf");
+}
+@font-face {
+  font-family: "netflixRegular";
+  src: url("assets/fonts/NetflixSans-Regular.otf");
+}
+
 /* prettier-ignore */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
