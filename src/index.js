@@ -8,8 +8,10 @@ import store from "./redux/config/configStore";
 import "./index.css";
 
 const mainTheme = {
-  backgroundColor: "#141414",
-  mainColor: "#ED4946",
+  accentColor: "#ED4946",
+  mainBgColor: "#141414",
+  transparentBgColor: "rgba(42,42,42,0.6)",
+  btnBorderColor: "hsla(0,0%,100%,0.5)",
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

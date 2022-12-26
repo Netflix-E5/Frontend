@@ -9,8 +9,8 @@ import Picked from "../pages/Picked";
 function Router() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
-        <Header />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/user/picked" element={<Picked />} />
