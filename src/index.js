@@ -9,13 +9,11 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const mainTheme = {
-  backgroundColor: "#141414",
-  mainColor: "#ED4946",
   bold: "netflixBold",
   light: "netflixLight",
   medium: "netflixMedium",
   regular: "netflixRegular",
-  accentColor: "#ED4946",
+  accentColor: "#E50914",
   mainBgColor: "#141414",
   transparentBgColor: "rgba(42,42,42,0.6)",
   btnBorderColor: "hsla(0,0%,100%,0.5)",
