@@ -69,9 +69,11 @@ const Signin = () => {
     navigate("/signup");
   };
 
-  const loginButton = (e) => {
+  const signinButton = (e) => {
     e.preventDefault();
-    dispatch(__postSignIn({ email: email, password: password }));
+    if (!showEmailError && !showPasswordError) {
+      dispatch(__postSignIn({ email: email, password: password }));
+    }
   };
   return (
     <>
@@ -100,6 +102,9 @@ const Signin = () => {
                       fontFamily: "netflixLight",
                       border: "none",
                       borderRadius: "2px",
+                      height: "50px",
+                      fontSize: "16px",
+                      paddingLeft: "15px",
                     }}
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
                     value={email}
@@ -129,6 +134,9 @@ const Signin = () => {
                       fontFamily: "netflixLight",
                       border: "none",
                       borderRadius: "2px",
+                      height: "50px",
+                      fontSize: "16px",
+                      paddingLeft: "15px",
                     }}
                     value={password}
                     onChange={passwordChange}
@@ -139,7 +147,7 @@ const Signin = () => {
                     <ErrorMsg>비밀번호는 6글자 이상입니다</ErrorMsg>
                   )}
                 </FloatingLabel>
-                <SigninFormButton onClick={loginButton}>
+                <SigninFormButton onClick={signinButton}>
                   로그인
                 </SigninFormButton>
               </SigninFormContainer>
@@ -161,6 +169,7 @@ const Signin = () => {
     </>
   );
 };
+
 const SigninBackgroundWrap = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
     url("https://assets.nflxext.com/ffe/siteui/vlv3/5e48e7b6-350d-48d9-96d6-de8ca173c89f/730cfed9-99b6-475f-8d64-2917128b6624/KR-ko-20221219-popsignuptwoweeks-perspective_alpha_website_large.jpg");
@@ -176,21 +185,7 @@ const SigninBackgroundWrap = styled.div`
   min-width: 80%;
   font-weight: bolder;
 `;
-const SigninHeader = styled.div`
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0, transparent);
-  border-bottom: transparent;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 90px;
-  font-style: normal;
-`;
-const Logo = styled.img`
-  width: 220px;
-  height: auto;
-  margin-left: 1.7%;
-`;
+
 const SigninBody = styled.div`
   background-color: transparent;
   margin: 0 auto -236px;
@@ -207,6 +202,7 @@ const SigninBody = styled.div`
     height: 236px;
   }
 `;
+
 const SigninWrap = styled.div`
   background-color: rgba(0, 0, 0, 0.75);
   border-radius: 4px;
@@ -221,18 +217,22 @@ const SigninWrap = styled.div`
   margin-bottom: 90px;
   padding: 60px 68px 40px;
 `;
+
 const SigninformMain = styled.div`
   flex-grow: 1;
 `;
+
 const SigninPageTitle = styled.h1`
   color: #fff;
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 28px;
 `;
+
 const SigninFormContainer = styled.form`
   margin-bottom: 0;
 `;
+
 const SigninFormButton = styled.button`
   border-radius: 8px;
   font-size: 16px;
@@ -246,12 +246,14 @@ const SigninFormButton = styled.button`
   font-family: "netflixBold";
   border: 1px solid black;
 `;
+
 const InduceMemberShip = styled.div`
   color: #737373;
   font-size: 16px;
   font-weight: 400;
   margin-top: 16px;
 `;
+
 const Singupnow = styled.span`
   color: white;
   cursor: pointer;
@@ -259,12 +261,14 @@ const Singupnow = styled.span`
     text-decoration: underline;
   }
 `;
+
 const Robotcheck = styled.span`
   color: #737373;
   margin-top: 20px;
   font-size: 14px;
   font-weight: 200;
 `;
+
 const RecaptchaButton = styled.button`
   background-color: transparent;
   border: none;
@@ -275,6 +279,7 @@ const RecaptchaButton = styled.button`
   font-size: 12px;
   padding: 0;
 `;
+
 const ErrorMsg = styled.div`
   border-top: 2px solid;
   border-color: #e87c03;
@@ -283,4 +288,5 @@ const ErrorMsg = styled.div`
   padding-left: 10px;
   color: #e87c03;
 `;
+
 export default Signin;

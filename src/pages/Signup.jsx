@@ -10,7 +10,6 @@ import { __postSignup } from "../redux/modules/UserSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
