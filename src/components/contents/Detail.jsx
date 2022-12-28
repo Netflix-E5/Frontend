@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
@@ -11,17 +11,25 @@ import EpisodeList from "./EpisodeList";
 import SummaryContents from "./SummaryContents";
 import TrailerContents from "./TrailerContents";
 
-import { __getMoviesDetail } from "../../redux/modules/MoviesSlice";
+import {
+  __getContentsDetail,
+  updateMute,
+} from "../../redux/modules/ContentsSlice";
 
 const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
-  const [mute, setMute] = useState(false);
-  const detail = useSelector((store) => store?.movies?.detail?.data);
-  const episode = useSelector((store) => store?.movies?.episode?.data);
   const dispatch = useDispatch();
+  const isMuted = useSelector((store) => store.contents.isMuted);
+  const handleIsMuted = () => {
+    dispatch(updateMute());
+  };
+  const isLoading = useSelector((store) => store.contents.isLoading);
+  const detail = useSelector((store) => store.contents.detail);
+  const episode = useSelector((store) => store.contents.episode);
 
   useEffect(() => {
-    dispatch(__getMoviesDetail(id));
-  }, []);
+    if (!show) return;
+    dispatch(__getContentsDetail(id));
+  }, [show]);
 
   const SortRatingText = () => {
     if (detail?.rating === "18") {
@@ -37,167 +45,187 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
 
   return (
     <>
-      <Modal
-        show={show}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        style={{
-          display: "flex",
-          margin: "auto",
-          justifyContent: "center",
-          alignItems: "center",
-          border: 0,
-          borderRadius: "6px",
-          boxShadow: "rgba(0, 0, 0, 0.75) 0px 3px 10px",
-        }}
-      >
-        <ModalBox>
-          <Modal.Body
-            style={{
-              width: "100%",
-              height: "680px",
-              backgroundColor: "#141414",
-              padding: 0,
-              overflow: "hidden",
-            }}
-          >
-            <VideoSection>
-              <FirstGradient />
-              <SecondGradient />
-              <ThirdGradient />
-              <ThirdGradient />
-              <ReactPlayer
-                className="react-player"
-                url={
-                  detail?.trailerUrl.length === 0
-                    ? "https://www.youtube.com/watch?v=NakTu_VZxJ0"
-                    : detail?.trailerUrl
-                }
-                width="100%"
-                height="723px"
-                muted={mute}
-                playing={true}
-                loop={true}
-              />
-              <div
-                style={{
-                  alignItems: "center",
-                  position: "absolute",
-                  bottom: "15%",
-                  left: "5rem",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <PlayBtn>
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                    <span
+      {show && !isLoading ? (
+        <Modal
+          show={show}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          style={{
+            display: "flex",
+            margin: "auto",
+            justifyContent: "center",
+            alignItems: "center",
+            border: 0,
+            borderRadius: "6px",
+            boxShadow: "rgba(0, 0, 0, 0.75) 0px 3px 10px",
+          }}
+        >
+          <ModalBox>
+            <Modal.Body
+              style={{
+                width: "100%",
+                height: "680px",
+                backgroundColor: "#141414",
+                padding: 0,
+                overflow: "hidden",
+              }}
+            >
+              <VideoSection>
+                <FirstGradient />
+                <SecondGradient />
+                <ThirdGradient />
+                <ThirdGradient />
+                <ReactPlayer
+                  className="react-player"
+                  url={
+                    detail?.trailerUrl.length === 0
+                      ? "https://www.youtube.com/watch?v=NakTu_VZxJ0"
+                      : detail?.trailerUrl
+                  }
+                  width="100%"
+                  height="723px"
+                  muted={isMuted}
+                  playing={true}
+                  loop={true}
+                />
+                <div
+                  style={{
+                    alignItems: "center",
+                    position: "absolute",
+                    bottom: "15%",
+                    left: "5rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <PlayBtn>
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                      <span
+                        style={{
+                          marginLeft: "1rem",
+                          fontSize: "16px",
+                        }}
+                      >
+                        재생
+                      </span>
+                    </PlayBtn>
+                    <div
                       style={{
-                        marginLeft: "1rem",
-                        fontSize: "16px",
+                        marginLeft: "0.8rem",
+                        width: "30px",
+                        height: "30px",
                       }}
                     >
-                      재생
-                    </span>
-                  </PlayBtn>
-                  <div
-                    style={{
-                      marginLeft: "0.8rem",
-                      width: "30px",
-                      height: "30px",
-                    }}
-                  >
-                    <IconBtn type={"addPick"} />
+                      <IconBtn type={"addPick"} />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "115px",
-                  right: "50px",
-                  width: "30px",
-                  height: "30px",
-                }}
-              >
-                <IconBtn
-                  type={mute === false ? "soundOn" : "soundOff"}
-                  handler={() => setMute(!mute)}
-                />
-              </div>
-              <CloseButton onClick={closeHandler}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  data-uia="previewModal-closebtn"
-                  role="button"
-                  aria-label="close"
-                  tabIndex="0"
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "115px",
+                    right: "50px",
+                    width: "30px",
+                    height: "30px",
+                  }}
                 >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z"
-                    fill="#d2d2d2"
-                    style={{ boxSizing: "inherit" }}
-                  ></path>
-                </svg>
-              </CloseButton>
-            </VideoSection>
-          </Modal.Body>
-          <Modal.Body
-            style={{
-              backgroundColor: "#181818",
-              color: "white",
-              padding: "10px 48px 48px 48px",
-            }}
-          >
-            <Details>
-              <DetailsLeft>
-                <VideoData>
-                  <div>
-                    <TopLine>
-                      <span style={{ marginRight: "10px" }}>
-                        {detail?.release}
-                      </span>
-                      <div style={{ width: "30px", height: "30px" }}>
-                        <RatingIcon rating={detail?.rating} />
-                      </div>
-                      <span style={{ marginLeft: "10px" }}>
-                        {episode?.length === 0
-                          ? null
-                          : `에피소드 ${episode?.length}개`}
-                      </span>
-                    </TopLine>
-
-                    {ranking === 0 ? null : (
-                      <>
-                        <RankingIcon />
-                        <span style={{ marginLeft: "0.8rem" }}>
-                          오늘의 {episode?.length === 0 ? "영화" : "시리즈"}{" "}
-                          순위 {ranking}위
+                  <IconBtn
+                    type={isMuted ? "soundOn" : "soundOff"}
+                    handler={handleIsMuted}
+                  />
+                </div>
+                <CloseButton onClick={closeHandler}>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    data-uia="previewModal-closebtn"
+                    role="button"
+                    aria-label="close"
+                    tabIndex="0"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2.29297 3.70706L10.5859 12L2.29297 20.2928L3.70718 21.7071L12.0001 13.4142L20.293 21.7071L21.7072 20.2928L13.4143 12L21.7072 3.70706L20.293 2.29285L12.0001 10.5857L3.70718 2.29285L2.29297 3.70706Z"
+                      fill="#d2d2d2"
+                      style={{ boxSizing: "inherit" }}
+                    ></path>
+                  </svg>
+                </CloseButton>
+              </VideoSection>
+            </Modal.Body>
+            <Modal.Body
+              style={{
+                backgroundColor: "#181818",
+                color: "white",
+                padding: "10px 48px 48px 48px",
+              }}
+            >
+              <Details>
+                <DetailsLeft>
+                  <VideoData>
+                    <div>
+                      <TopLine>
+                        <span style={{ marginRight: "10px" }}>
+                          {detail?.release}
                         </span>
-                      </>
-                    )}
+                        <div style={{ width: "30px", height: "30px" }}>
+                          <RatingIcon rating={detail?.rating} />
+                        </div>
+                        <span style={{ marginLeft: "10px" }}>
+                          {episode?.length === 0
+                            ? null
+                            : `에피소드 ${episode?.length}개`}
+                        </span>
+                      </TopLine>
+
+                      {ranking === 0 ? null : (
+                        <>
+                          <RankingIcon />
+                          <span style={{ marginLeft: "0.8rem" }}>
+                            오늘의 {episode?.length === 0 ? "영화" : "시리즈"}{" "}
+                            순위 {ranking}위
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </VideoData>
+                  <VideoDesc>{detail?.summary}</VideoDesc>
+                </DetailsLeft>
+                <DetailsRight>
+                  <div>
+                    <DetailLabel>출연:</DetailLabel>
+                    {detail?.actor}
                   </div>
-                </VideoData>
-                <VideoDesc>{detail?.summary}</VideoDesc>
-              </DetailsLeft>
-              <DetailsRight>
+                  <div>
+                    <DetailLabel>장르:</DetailLabel>
+                    {detail?.genre}
+                  </div>
+                </DetailsRight>
+              </Details>
+              <EpisodeList />
+              <SummaryContents></SummaryContents>
+              <TrailerContents></TrailerContents>
+              <Label>{detail?.title} 상세 정보</Label>
+              <WrapDetailInfo>
+                <div>
+                  <DetailLabel>크리에이터:</DetailLabel>
+                  {detail?.director}
+                </div>
                 <div>
                   <DetailLabel>출연:</DetailLabel>
                   {detail?.actor}
@@ -206,40 +234,24 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   <DetailLabel>장르:</DetailLabel>
                   {detail?.genre}
                 </div>
-              </DetailsRight>
-            </Details>
-            <EpisodeList />
-            <SummaryContents></SummaryContents>
-            <TrailerContents></TrailerContents>
-            <Label>{detail?.title} 상세 정보</Label>
-            <WrapDetailInfo>
-              <div>
-                <DetailLabel>크리에이터:</DetailLabel>
-                {detail?.director}
-              </div>
-              <div>
-                <DetailLabel>출연:</DetailLabel>
-                {detail?.actor}
-              </div>
-              <div>
-                <DetailLabel>장르:</DetailLabel>
-                {detail?.genre}
-              </div>
-              <div style={{ display: "flex" }}>
-                <DetailLabel style={{ marginRight: "10px" }}>
-                  관람등급:
-                </DetailLabel>
-                <div style={{ width: "30px", height: "30px" }}>
-                  <RatingIcon rating={detail?.rating} />
+                <div style={{ display: "flex" }}>
+                  <DetailLabel style={{ marginRight: "10px" }}>
+                    관람등급:
+                  </DetailLabel>
+                  <div style={{ width: "30px", height: "30px" }}>
+                    <RatingIcon rating={detail?.rating} />
+                  </div>
+                  <span style={{ marginLeft: "10px" }}>
+                    <SortRatingText />
+                  </span>
                 </div>
-                <span style={{ marginLeft: "10px" }}>
-                  <SortRatingText />
-                </span>
-              </div>
-            </WrapDetailInfo>
-          </Modal.Body>
-        </ModalBox>
-      </Modal>
+              </WrapDetailInfo>
+            </Modal.Body>
+          </ModalBox>
+        </Modal>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

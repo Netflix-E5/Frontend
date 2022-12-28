@@ -17,6 +17,7 @@ const mainTheme = {
   mainBgColor: "#141414",
   transparentBgColor: "rgba(42,42,42,0.6)",
   btnBorderColor: "hsla(0,0%,100%,0.5)",
+  transparentBtnColor: "rgba(109, 109, 110, 0.7)",
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
