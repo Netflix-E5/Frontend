@@ -124,7 +124,6 @@ const Signup = () => {
       dispatch(
         __postSignup({ email: email, password: password, nickname: nickname })
       );
-      navigate("/signin");
     }
   };
 

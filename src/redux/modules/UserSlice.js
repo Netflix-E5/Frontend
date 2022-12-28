@@ -12,10 +12,12 @@ export const __postSignup = createAsyncThunk(
   "postSignup",
   async (payload, thunkAPI) => {
     try {
-      await apis.signup(payload).then((respose) => {
-        return thunkAPI.fulfillWithValue(respose.data);
-      });
-      window.alert("회원가입 성공!");
+      const response = await apis.signup(payload);
+      if (response.status === 200) {
+        window.alert("회원가입성공! 로그인페이지로 이동합니다");
+        window.location.href = "http://localhost:3000/signin";
+        return thunkAPI.fulfillWithValue(response.data);
+      }
     } catch (error) {
       window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error);
