@@ -1,15 +1,81 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import netflixlogo from "../assets/img/netflixlogo.png";
+
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
+import { __postSignIn } from "../redux/modules/UserSlice";
+
 const Signin = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [showEmailError, setEmailError] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const emailRegex = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/);
+
+  const emailChange = (event) => {
+    setEmail(event.target.value);
+    if (!emailRegex.test(event.target.value)) {
+      if (!isFocused) {
+        setEmailError(true);
+      }
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const emailFocus = () => {
+    setIsFocused(true);
+  };
+
+  const emailBlur = (event) => {
+    setIsFocused(false);
+    if (!emailRegex.test(event.target.value)) {
+      setEmailError(true);
+    }
+  };
+
+  const passwordChange = (event) => {
+    setPassword(event.target.value);
+    if (event.target.value.length < 6) {
+      if (!isFocused) {
+        setShowPasswordError(true);
+      }
+    } else {
+      setShowPasswordError(false);
+    }
+  };
+
+  const passWordFocus = () => {
+    setIsFocused(true);
+  };
+
+  const passwordBlur = () => {
+    setIsFocused(false);
+    if (password.length < 6) {
+      setShowPasswordError(true);
+    }
+  };
+
+  const signupBtn = () => {
+    navigate("/signup");
+  };
+
+  const loginButton = (e) => {
+    e.preventDefault();
+    dispatch(__postSignIn({ email: email, password: password }));
+  };
   return (
     <>
       <SigninBackgroundWrap>
-        <SigninHeader>
-          <Logo src={netflixlogo} />
-        </SigninHeader>
         <SigninBody>
           <SigninWrap>
             <SigninformMain>
@@ -21,8 +87,8 @@ const Signin = () => {
                   className="mb-3"
                   style={{
                     color: "#cfc9c9",
-                    fontWeight: "100",
-                    fontSize: "15px",
+                    fontWeight: "200",
+                    fontSize: "14px",
                   }}
                 >
                   <Form.Control
@@ -33,16 +99,24 @@ const Signin = () => {
                       color: "white",
                       fontFamily: "netflixLight",
                       border: "none",
+                      borderRadius: "2px",
                     }}
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}"
+                    value={email}
+                    onChange={emailChange}
+                    onFocus={emailFocus}
+                    onBlur={emailBlur}
                   />
+                  {showEmailError && (
+                    <ErrorMsg>정확한 이메일을 입력해주세요</ErrorMsg>
+                  )}
                 </FloatingLabel>
-                <PasswordInputbox></PasswordInputbox>
                 <FloatingLabel
                   controlId="floatingPassword"
                   label="비밀번호"
                   style={{
                     color: "#cfc9c9",
-                    fontSize: "15px",
+                    fontSize: "13px",
                     fontWeight: "100",
                   }}
                 >
@@ -54,20 +128,32 @@ const Signin = () => {
                       color: "white",
                       fontFamily: "netflixLight",
                       border: "none",
-                      paddingRight: "50px",
+                      borderRadius: "2px",
                     }}
+                    value={password}
+                    onChange={passwordChange}
+                    onFocus={passWordFocus}
+                    onBlur={passwordBlur}
                   ></Form.Control>
+                  {showPasswordError && (
+                    <ErrorMsg>비밀번호는 6글자 이상입니다</ErrorMsg>
+                  )}
                 </FloatingLabel>
-                <SigninFormButton> 로그인</SigninFormButton>
+                <SigninFormButton onClick={loginButton}>
+                  로그인
+                </SigninFormButton>
               </SigninFormContainer>
               <InduceMemberShip>
-                Netfliix 회원이 아닌가요? <Singupnow>지금가입하세요</Singupnow>
+                Netfliix 회원이 아닌가요? <span> </span>
+                <Singupnow onClick={signupBtn}>지금가입하세요</Singupnow>
               </InduceMemberShip>
               <Robotcheck>
                 이 페이지는 Google reCAPTCHA의 보호를 받아 사용자가 로봇이
-                아님을 확인못합니다.
+                아님을 확인 못합니다.
               </Robotcheck>
-              <RecaptchaButton>자세히알아보기</RecaptchaButton>
+              <RecaptchaButton>
+                <a href="https://policies.google.com/privacy">자세히알아보기</a>
+              </RecaptchaButton>
             </SigninformMain>
           </SigninWrap>
         </SigninBody>
@@ -105,7 +191,6 @@ const Logo = styled.img`
   height: auto;
   margin-left: 1.7%;
 `;
-
 const SigninBody = styled.div`
   background-color: transparent;
   margin: 0 auto -236px;
@@ -136,7 +221,6 @@ const SigninWrap = styled.div`
   margin-bottom: 90px;
   padding: 60px 68px 40px;
 `;
-
 const SigninformMain = styled.div`
   flex-grow: 1;
 `;
@@ -149,7 +233,6 @@ const SigninPageTitle = styled.h1`
 const SigninFormContainer = styled.form`
   margin-bottom: 0;
 `;
-
 const SigninFormButton = styled.button`
   border-radius: 8px;
   font-size: 16px;
@@ -170,7 +253,7 @@ const InduceMemberShip = styled.div`
   margin-top: 16px;
 `;
 const Singupnow = styled.span`
-  color: #fff;
+  color: white;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -192,8 +275,12 @@ const RecaptchaButton = styled.button`
   font-size: 12px;
   padding: 0;
 `;
-const PasswordInputbox = styled.div`
-  display: flex;
+const ErrorMsg = styled.div`
+  border-top: 2px solid;
+  border-color: #e87c03;
+  border-radius: 1px;
+  font-size: 12px;
+  padding-left: 10px;
+  color: #e87c03;
 `;
-
 export default Signin;
