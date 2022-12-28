@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function IconBtn({ type, theme = "dark" }) {
+function IconBtn({ type, theme = "dark", handler }) {
   const setBtnIcon = () => {
     switch (type) {
       case "soundOn":
@@ -48,7 +48,7 @@ function IconBtn({ type, theme = "dark" }) {
     }
   };
   return (
-    <Btn bgColor={theme}>
+    <Btn bgColor={theme} onClick={handler}>
       <SvgIcon viewBox="0 0 24 24">{setBtnIcon()}</SvgIcon>
     </Btn>
   );
@@ -70,8 +70,8 @@ const Btn = styled.button`
 `;
 
 const SvgIcon = styled.svg`
-  width: 1rem;
-  height: 1rem;
+  width: 100%;
+  height: 100%;
 `;
 
 export default IconBtn;
