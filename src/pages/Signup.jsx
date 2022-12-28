@@ -6,7 +6,7 @@ import styled from "styled-components";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
-import { __postSignUp } from "../redux/modules/UserSlice";
+import { __postSignup } from "../redux/modules/UserSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -14,15 +14,18 @@ const Signup = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const [checkbox, setCheckbox] = useState(false);
   const [showEmailError, setEmailError] = useState(false);
   const [showPasswordError, setShowPasswordError] = useState(false);
+  const [showNicknameError, setShowNicknameError] = useState(false);
   const [checkboxError, setCheckboxError] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
   const [borderEmailColor, setBorderEmailColor] = useState("black");
   const [borderPwColor, setBorderPwColor] = useState("black");
+  const [borderNicknameColor, setBorderNicknameColor] = useState("black");
 
   const emailRegex = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/);
 
@@ -39,9 +42,11 @@ const Signup = () => {
       setBorderEmailColor("lightgreen");
     }
   };
+
   const emailFocus = () => {
     setIsFocused(true);
   };
+
   const emailBlur = (event) => {
     setIsFocused(false);
     if (!emailRegex.test(event.target.value)) {
@@ -49,6 +54,7 @@ const Signup = () => {
       setBorderEmailColor("#b92d2b");
     }
   };
+
   const passwordChange = (event) => {
     setPassword(event.target.value);
     if (event.target.value.length < 6) {
@@ -61,9 +67,11 @@ const Signup = () => {
       setBorderPwColor("lightgreen");
     }
   };
-  const passWordFocus = () => {
+
+  const passwordFocus = () => {
     setIsFocused(true);
   };
+
   const passwordBlur = () => {
     setIsFocused(false);
     if (password.length < 6) {
@@ -71,10 +79,37 @@ const Signup = () => {
       setBorderPwColor("#b92d2b");
     }
   };
+
+  const nicknameChange = (event) => {
+    setNickname(event.target.value);
+    if (event.target.value.length < 2 || event.target.value.length > 8) {
+      if (!isFocused) {
+        setShowNicknameError(true);
+        setBorderNicknameColor("#b92d2b");
+      }
+    } else {
+      setShowNicknameError(false);
+      setBorderNicknameColor("lightgreen");
+    }
+  };
+
+  const nicknameFocus = () => {
+    setIsFocused(true);
+  };
+
+  const nciknameBlur = () => {
+    setIsFocused(false);
+    if (nickname.length < 2 || nickname.length > 8) {
+      setShowNicknameError(true);
+      setBorderNicknameColor("#b92d2b");
+    }
+  };
+
   const checkErrorRemove = (event) => {
     setCheckbox(event.target.checked);
     setCheckboxError(false);
   };
+
   const regButton = (event) => {
     event.preventDefault();
     const checkbox = document.getElementById("check1");
@@ -83,13 +118,15 @@ const Signup = () => {
     } else if (
       borderEmailColor === "lightgreen" &&
       borderPwColor === "lightgreen" &&
+      borderNicknameColor == "lightgreen" &&
       !checkboxError
     ) {
-      dispatch(__postSignUp({ email: email, password: password }));
-      alert("회원가입 완료!");
-      navigate("/signin");
+      dispatch(
+        __postSignup({ email: email, password: password, nickname: nickname })
+      );
     }
   };
+
   return (
     <Signupcontainer>
       <SigninBody>
@@ -122,6 +159,9 @@ const Signup = () => {
               color: "black",
               fontFamily: "netflixLight",
               border: `1px solid ${borderEmailColor}`,
+              height: "60px",
+              fontSize: "16px",
+              paddingLeft: "15px",
             }}
           />
           {showEmailError && (
@@ -145,17 +185,53 @@ const Signup = () => {
               color: "#000000",
               fontFamily: "netflixLight",
               border: `1px solid ${borderPwColor}`,
+              height: "60px",
+              fontSize: "16px",
+              paddingLeft: "15px",
             }}
             value={password}
             onChange={passwordChange}
-            onFocus={passWordFocus}
+            onFocus={passwordFocus}
             onBlur={passwordBlur}
-          ></Form.Control>
+          />
           {showPasswordError && (
-            <ErrorMsg>비빌번호는 6글자 이상이여야 합니다</ErrorMsg>
+            <ErrorMsg>비빌번호는 여섯글자 이상이여야 합니다</ErrorMsg>
           )}
         </FloatingLabel>
-
+        <p />
+        <FloatingLabel
+          controlId="floatingInput"
+          label="닉네임"
+          className="mb-3"
+          style={{
+            color: "#363636",
+            fontWeight: "100",
+            fontSize: "15px",
+          }}
+        >
+          <Form.Control
+            type="nickname"
+            placeholder="닉네임"
+            value={nickname}
+            onChange={nicknameChange}
+            onFocus={nicknameFocus}
+            onBlur={nciknameBlur}
+            style={{
+              backgroundColor: "#ffffff",
+              color: "black",
+              fontFamily: "netflixLight",
+              border: `1px solid ${borderNicknameColor}`,
+              height: "60px",
+              fontSize: "16px",
+              paddingLeft: "15px",
+            }}
+          />
+          {showNicknameError && (
+            <ErrorMsg>
+              닉네임은 두 글자 이상, 여덟 글자 이하여야 합니다
+            </ErrorMsg>
+          )}
+        </FloatingLabel>
         <Checkbox>
           <Check
             type="checkbox"
@@ -164,11 +240,13 @@ const Signup = () => {
             onChange={checkErrorRemove}
           />
           <div>
-            예, 저는
-            <Spantext>
-              <a href="https://help.netflix.com/legal/privacy">
-                개인정보 처리방침
-              </a>
+            예, 저는{" "}
+            <Spantext
+              onClick={() => {
+                window.location.href = "https://help.netflix.com/legal/privacy";
+              }}
+            >
+              개인정보 처리방침
             </Spantext>
             에 따른 개인정보 수집 및 활용에 동의합니다.
           </div>
@@ -197,30 +275,7 @@ const Signupcontainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const SignupHeader = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 90px;
-  border-bottom: 1px solid #d8d8d8;
-  display: flex;
-  justify-content: space-between;
-  padding-right: 50px;
-  padding-left: 50px;
-`;
-const Logo = styled.img`
-  width: 220px;
-  height: auto;
-`;
-const Signuptag = styled.span`
-  color: #555555;
-  margin-top: 20px;
-  font-size: 25px;
-  font-weight: 100;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+
 const SigninBody = styled.div`
   background-color: transparent;
   margin: 0 auto -236px;
@@ -237,18 +292,21 @@ const SigninBody = styled.div`
     height: 236px;
   }
 `;
+
 const Signuptitle = styled.div`
   color: #363636;
   font-size: 36px;
   font-family: "netflixLight";
   margin-bottom: 20px;
 `;
+
 const Signupcontent = styled.div`
   color: #363636;
   font-size: 18px;
   font-family: "netflixLight";
   margin-bottom: 20px;
 `;
+
 const Checkbox = styled.div`
   margin-top: 10px;
   box-sizing: border-box;
@@ -259,17 +317,12 @@ const Checkbox = styled.div`
   gap: 10px;
   display: flex;
 `;
+
 const Check = styled.input.attrs({ type: "checkbox" })`
   width: 40px;
   height: 40px;
 `;
-const Spantext = styled.span`
-  color: #0086f3;
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-`;
+
 const SignupFormButton = styled.button`
   border-radius: 5px;
   font-size: 20px;
@@ -283,9 +336,18 @@ const SignupFormButton = styled.button`
   font-family: "netflixBold";
   border: none;
 `;
+
 const ErrorMsg = styled.p`
   color: #b92d2b;
   padding-top: 5px;
   font-size: 13px;
+`;
+
+const Spantext = styled.span`
+  color: #0071eb;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 export default Signup;
