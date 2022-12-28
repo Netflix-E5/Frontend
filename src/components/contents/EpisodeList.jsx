@@ -5,16 +5,16 @@ import styled from "styled-components";
 import { Label } from "./Detail";
 import { PlayIcon } from "./Detail";
 
-import { __getMoviesEpisode } from "../../redux/modules/MoviesSlice";
+import { __getContentsEpisode } from "../../redux/modules/ContentsSlice";
 
 const EpisodeList = ({ id }) => {
-  const detail = useSelector((store) => store.movies.detail.data);
-  const seasons = useSelector((store) => store.movies.episode.data);
+  const detail = useSelector((store) => store.contents.detail.data);
+  const seasons = useSelector((store) => store.contents.episode.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
-      __getMoviesEpisode({
+      __getContentsEpisode({
         contentsId: id,
         season: 1,
       })
