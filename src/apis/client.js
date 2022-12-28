@@ -6,10 +6,16 @@ export const noneTokenClient = axios.create({
   baseURL: process.env.REACT_APP_API,
 });
 
-client.interceptors.request((config) => {
-  const accessToken = localStorage.getItem("accessToken");
-  config.headers["token"] = `${accessToken}`;
-  return config;
-});
+export const userapi = {
+  signup: ({ email, password, nickname }) =>
+    client.post("users/signup", {
+      email: email,
+      password: password,
+      nickname: nickname,
+    }),
+
+  signin: ({ email, password }) =>
+    client.post("users/login", { email: email, password: password }),
+};
 
 export default client;
