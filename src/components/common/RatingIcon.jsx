@@ -4,7 +4,7 @@ import styled from "styled-components";
 function RatingIcon({ rating }) {
   const setRatingIcon = () => {
     switch (rating) {
-      case 18:
+      case "18":
         return (
           <>
             <path
@@ -17,7 +17,7 @@ function RatingIcon({ rating }) {
             />
           </>
         );
-      case 15:
+      case "15":
         return (
           <>
             <path
@@ -30,7 +30,7 @@ function RatingIcon({ rating }) {
             />
           </>
         );
-      case 12:
+      case "12":
         return (
           <>
             <path
@@ -62,8 +62,8 @@ function RatingIcon({ rating }) {
 }
 
 const SvgIcon = styled.svg`
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 100%;
+  height: 100%;
 `;
 
 export default RatingIcon;
