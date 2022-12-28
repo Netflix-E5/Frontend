@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import client from "../../apis/client";
 
-const __getMoviesByViewAsc = createAsyncThunk(
+export const __getMoviesByViewAsc = createAsyncThunk(
   "getMoviesByViewAsc",
   async (payload, thunkAPI) => {
     console.log(payload);
@@ -8,7 +9,7 @@ const __getMoviesByViewAsc = createAsyncThunk(
   }
 );
 
-const __getMoviesByGenre = createAsyncThunk(
+export const __getMoviesByGenre = createAsyncThunk(
   "getMoviesByGenre",
   async (payload, thunkAPI) => {
     console.log(payload);
@@ -16,7 +17,7 @@ const __getMoviesByGenre = createAsyncThunk(
   }
 );
 
-const __getMoviesByRating = createAsyncThunk(
+export const __getMoviesByRating = createAsyncThunk(
   "getMoviesByRating",
   async (payload, thunkAPI) => {
     console.log(payload);
@@ -24,12 +25,40 @@ const __getMoviesByRating = createAsyncThunk(
   }
 );
 
+export const __getMoviesDetail = createAsyncThunk(
+  "getMoviesDetail",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await client.get(`/contents/${payload}`);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getMoviesEpisode = createAsyncThunk(
+  "getMoviesEpisode",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await client.get(
+        `/contents/${payload.contentsId}/season/${payload.season}`
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
-  movies: {
-    topViewed: [],
-    genre: [],
-    rating: [],
-  },
+  topViewed: [],
+  genre: [],
+  rating: [],
+  detail: [],
+  episode: [],
   isLoading: false,
 };
 
@@ -38,7 +67,7 @@ const moviesSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(__getMoviesByViewAsc, (state, action) => {
+      .addCase(__getMoviesByViewAsc.fulfilled, (state, action) => {
         console.log(action.payload);
       })
       .addCase(__getMoviesByGenre.fulfilled, (state, action) => {
@@ -46,6 +75,12 @@ const moviesSlice = createSlice({
       })
       .addCase(__getMoviesByRating.fulfilled, (state, action) => {
         console.log(action.payload);
+      })
+      .addCase(__getMoviesDetail.fulfilled, (state, action) => {
+        state.detail = action.payload;
+      })
+      .addCase(__getMoviesEpisode.fulfilled, (state, action) => {
+        state.episode = action.payload;
       });
   },
 });

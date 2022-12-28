@@ -46,6 +46,7 @@ time, mark, audio, video {
 html,
 body {
   font-size: 10px;
+  word-break: keep-all;
 }
 
 @media screen and (min-width: 841px) and (max-width: 1280px) and (max-aspect-ratio: 4 / 3) {

@@ -6,7 +6,7 @@ export const noneTokenClient = axios.create({
   baseURL: process.env.REACT_APP_API,
 });
 
-client.interceptors.request((config) => {
+client.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   config.headers["token"] = `${accessToken}`;
   return config;

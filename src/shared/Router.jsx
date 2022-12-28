@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./Header";
+import Signin from "../pages/Signin";
 import Home from "../pages/Home";
 import Picked from "../pages/Picked";
-import Signin from "../pages/Signin";
 
 const Router = () => {
   return (
