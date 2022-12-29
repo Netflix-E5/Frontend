@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
@@ -45,7 +45,7 @@ const Signin = () => {
 
   const passwordChange = (event) => {
     setPassword(event.target.value);
-    if (event.target.value.length < 6) {
+    if (event.target.value.length < 8) {
       if (!isFocused) {
         setShowPasswordError(true);
       }
@@ -60,7 +60,7 @@ const Signin = () => {
 
   const passwordBlur = () => {
     setIsFocused(false);
-    if (password.length < 6) {
+    if (password.length < 8) {
       setShowPasswordError(true);
     }
   };
@@ -144,7 +144,10 @@ const Signin = () => {
                     onBlur={passwordBlur}
                   ></Form.Control>
                   {showPasswordError && (
-                    <ErrorMsg>비밀번호는 6글자 이상입니다</ErrorMsg>
+                    <ErrorMsg>
+                      비빌번호는 여덟글자 이상이며, 특수문자가 포함되어야
+                      합니다.
+                    </ErrorMsg>
                   )}
                 </FloatingLabel>
                 <SigninFormButton onClick={signinButton}>

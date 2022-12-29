@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
@@ -56,7 +55,7 @@ const Signup = () => {
 
   const passwordChange = (event) => {
     setPassword(event.target.value);
-    if (event.target.value.length < 6) {
+    if (event.target.value.length < 8) {
       if (!isFocused) {
         setShowPasswordError(true);
         setBorderPwColor("#b92d2b");
@@ -73,7 +72,7 @@ const Signup = () => {
 
   const passwordBlur = () => {
     setIsFocused(false);
-    if (password.length < 6) {
+    if (password.length < 8) {
       setShowPasswordError(true);
       setBorderPwColor("#b92d2b");
     }
@@ -117,7 +116,7 @@ const Signup = () => {
     } else if (
       borderEmailColor === "lightgreen" &&
       borderPwColor === "lightgreen" &&
-      borderNicknameColor == "lightgreen" &&
+      borderNicknameColor === "lightgreen" &&
       !checkboxError
     ) {
       dispatch(
@@ -194,7 +193,9 @@ const Signup = () => {
             onBlur={passwordBlur}
           />
           {showPasswordError && (
-            <ErrorMsg>비빌번호는 여섯글자 이상이여야 합니다</ErrorMsg>
+            <ErrorMsg>
+              비빌번호는 여덟글자 이상, 특수문자가 포함되어야 합니다.
+            </ErrorMsg>
           )}
         </FloatingLabel>
         <p />
