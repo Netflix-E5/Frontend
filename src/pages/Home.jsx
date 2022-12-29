@@ -130,11 +130,11 @@ function Home() {
               {isVideoEnded ? (
                 <IconBtn type="replay" />
               ) : (
-                <IconBtn type={isMuted ? "soundOn" : "soundOff"} />
+                <IconBtn type={isMuted ? "soundOff" : "soundOn"} />
               )}
             </IconBtnWrapper>
             <RatingIconWrapper>
-              <RatingIcon rating={15} />
+              <RatingIcon rating={"15"} />
             </RatingIconWrapper>
           </RightBtnWrapper>
         </BtnLayer>

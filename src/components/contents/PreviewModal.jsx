@@ -9,7 +9,10 @@ import ToggleMsg from "../common/ToggleMsg";
 
 import defaultImg from "../../assets/img/test.jpg";
 
-import { updateMute } from "../../redux/modules/ContentsSlice";
+import {
+  updateMute,
+  __postCountViews,
+} from "../../redux/modules/ContentsSlice";
 import Detail from "./Detail";
 
 function PreviewModal({ contents, show }) {
@@ -53,6 +56,11 @@ function PreviewModal({ contents, show }) {
   useEffect(() => {
     setIsMouseOver(false);
   }, [showDetailModal]);
+
+  const addCountViews = (e) => {
+    e.preventDefault();
+    dispatch(__postCountViews(contents.contentsId));
+  };
 
   return (
     <Wrapper
@@ -106,7 +114,7 @@ function PreviewModal({ contents, show }) {
             show={isMouseOver && !isVideoEnded}
             onClick={handleIsMuted}
           >
-            <IconBtn type={isMuted ? "soundOn" : "soundOff"} />
+            <IconBtn type={isMuted ? "soundOff" : "soundOn"} />
           </VideoIconBtnWrapper>
         </ThumbnailWrapper>
         <Body id="info">
@@ -131,7 +139,7 @@ function PreviewModal({ contents, show }) {
             </ToggleMsgPositionWrapper>
             <BtnWrapper>
               <SubBtnWrapper>
-                <IconBtnWrapper>
+                <IconBtnWrapper onClick={addCountViews}>
                   <IconBtn
                     type="play"
                     theme="light"
