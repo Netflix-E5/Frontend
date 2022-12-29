@@ -31,6 +31,8 @@ function Header() {
     window.location.reload();
   };
 
+  const nickname = localStorage.getItem("nickname");
+
   const navigate = useNavigate();
   return (
     <Wrapper isMenuStyle={showMenu}>
@@ -75,19 +77,15 @@ function Header() {
                   <ProfileToggle>
                     <ProfileMenuCaret />
                     <ProfileMenuWrapper>
-                      {localStorage.getItem("nickname") ? (
-                        <ProfileIcon
-                          src="http://occ-0-1360-993.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229"
-                          alt=""
-                          style={{
-                            marginRight: "10px",
-                            marginLeft: "10px",
-                          }}
-                        />
-                      ) : null}
-                      {localStorage.getItem("nickname")
-                        ? `${localStorage.getItem("nickname")}`
-                        : null}
+                      <ProfileIcon
+                        src="http://occ-0-1360-993.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229"
+                        alt=""
+                        style={{
+                          marginRight: "10px",
+                          marginLeft: "10px",
+                        }}
+                      />
+                      {`${nickname}`}
                       {userMenu.map((v) => (
                         <ProfileMenu
                           key={v.name}
