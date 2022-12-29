@@ -55,6 +55,19 @@ export const __getContentsEpisode = createAsyncThunk(
   }
 );
 
+export const __postCountViews = createAsyncThunk(
+  "postCountViews",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await contentsapi.postCountViews(payload);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
   topViewed: [
     {

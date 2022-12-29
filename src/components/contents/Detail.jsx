@@ -14,6 +14,7 @@ import TrailerContents from "./TrailerContents";
 import {
   __getContentsDetail,
   updateMute,
+  __postCountViews,
 } from "../../redux/modules/ContentsSlice";
 
 const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
@@ -41,6 +42,11 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
     } else {
       return "전체관람가";
     }
+  };
+
+  const addCountViews = (e) => {
+    e.preventDefault();
+    dispatch(__postCountViews(id));
   };
 
   return (
@@ -79,7 +85,7 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                 <ReactPlayer
                   className="react-player"
                   url={
-                    detail?.trailerUrl.length === 0
+                    detail?.trailerUrl?.length === 0
                       ? "https://www.youtube.com/watch?v=NakTu_VZxJ0"
                       : detail?.trailerUrl
                   }
@@ -88,6 +94,15 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   muted={isMuted}
                   playing={true}
                   loop={true}
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        origin: process.env.REACT_APP_LOCAL,
+                        fs: 0,
+                        modestbranding: 1,
+                      },
+                    },
+                  }}
                 />
                 <div
                   style={{
@@ -98,7 +113,7 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    <PlayBtn>
+                    <PlayBtn onClick={addCountViews}>
                       <svg
                         width="24"
                         height="24"
@@ -141,7 +156,7 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   }}
                 >
                   <IconBtn
-                    type={isMuted ? "soundOn" : "soundOff"}
+                    type={isMuted ? "soundOff" : "soundOn"}
                     handler={handleIsMuted}
                   />
                 </div>
@@ -217,7 +232,7 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   </div>
                 </DetailsRight>
               </Details>
-              <EpisodeList />
+              <EpisodeList id={id} />
               <SummaryContents></SummaryContents>
               <TrailerContents></TrailerContents>
               <Label>{detail?.title} 상세 정보</Label>

@@ -72,6 +72,7 @@ export const contentsapi = {
   getContentsDetail: (contentsId) => client.get(`/contents/${contentsId}`),
   getContentsEpisodes: ({ contentsId, season }) =>
     client.get(`/contents/${contentsId}/season/${season}`),
+  postCountViews: (contentsId) => client.post(`/contents/${contentsId}/views`),
 };
 
 export default client;

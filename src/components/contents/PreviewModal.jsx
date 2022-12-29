@@ -6,11 +6,14 @@ import ReactPlayer from "react-player";
 import IconBtn from "../common/IconBtn";
 import RatingIcon from "../common/RatingIcon";
 import ToggleMsg from "../common/ToggleMsg";
+import Detail from "./Detail";
 
 import defaultImg from "../../assets/img/test.jpg";
 
-import { updateMute } from "../../redux/modules/ContentsSlice";
-import Detail from "./Detail";
+import {
+  updateMute,
+  __postCountViews,
+} from "../../redux/modules/ContentsSlice";
 
 function PreviewModal({ contents, show }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -54,6 +57,11 @@ function PreviewModal({ contents, show }) {
     setIsMouseOver(false);
   }, [showDetailModal]);
 
+  const addCountViews = (e) => {
+    e.preventDefault();
+    dispatch(__postCountViews(contents.contentsId));
+  };
+
   return (
     <Wrapper
       show={show || isMouseOver}
@@ -93,9 +101,8 @@ function PreviewModal({ contents, show }) {
             }
             config={{
               youtube: {
-                // TODO: edit origin to use https client domain
                 playerVars: {
-                  origin: "http://localhost:3000",
+                  origin: process.env.REACT_APP_LOCAL,
                   fs: 0,
                   modestbranding: 1,
                 },
@@ -106,7 +113,7 @@ function PreviewModal({ contents, show }) {
             show={isMouseOver && !isVideoEnded}
             onClick={handleIsMuted}
           >
-            <IconBtn type={isMuted ? "soundOn" : "soundOff"} />
+            <IconBtn type={isMuted ? "soundOff" : "soundOn"} />
           </VideoIconBtnWrapper>
         </ThumbnailWrapper>
         <Body id="info">
@@ -131,7 +138,7 @@ function PreviewModal({ contents, show }) {
             </ToggleMsgPositionWrapper>
             <BtnWrapper>
               <SubBtnWrapper>
-                <IconBtnWrapper>
+                <IconBtnWrapper onClick={addCountViews}>
                   <IconBtn
                     type="play"
                     theme="light"
