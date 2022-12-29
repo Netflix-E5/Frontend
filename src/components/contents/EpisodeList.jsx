@@ -5,11 +5,13 @@ import styled from "styled-components";
 import { Label } from "./Detail";
 import { PlayIcon } from "./Detail";
 
+import defaultImg from "../../assets/img/test2.jpg";
+
 import { __getContentsEpisode } from "../../redux/modules/ContentsSlice";
 
 const EpisodeList = ({ id }) => {
-  const detail = useSelector((store) => store.contents.detail.data);
-  const seasons = useSelector((store) => store.contents.episode.data);
+  const detail = useSelector((store) => store.contents.detail);
+  const seasons = useSelector((store) => store.contents.episode);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,9 +30,10 @@ const EpisodeList = ({ id }) => {
           <EpisodeNum>{season?.episodeId}</EpisodeNum>
           <EpisodeVideo>
             <img
-              src="https://occ-0-3681-993.1.nflxso.net/dnm/api/v6/9pS1daC2n6UGc3dUogvWIPMR_OU/AAAABQU4hw8fUOGS7RAD39LQdxNOMzS4u65i1McIIGYHF6QCgTIp43CbZTPUj5ZMLCei4DWAF6vlSiAi_Ol5q5HCT1ciA0Fkvdpb6HW8ZLTsPZQyE10ICOi2OanK.jpg?r=952"
-              alt="수요일의 아이는 울적하다"
-            ></img>
+              onError={(e) => (e.target.src = defaultImg)}
+              src={detail.thumbnailUrl}
+              alt=""
+            />
             <PlayIcon>
               <svg
                 style={{ width: "38px", height: "38px" }}
