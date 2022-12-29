@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import FloatingLabel from "react-bootstrap/FloatingLabel";
@@ -10,7 +9,6 @@ import { __postSignup } from "../redux/modules/UserSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
