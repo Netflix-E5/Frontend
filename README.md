@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# :movie_camera: Netflix 클론 코딩 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 개요
 
-## Available Scripts
+:white_check_mark: **프로젝트 주제**: 상용 서비스 기능을 클론 코딩 해보기
 
-In the project directory, you can run:
+:white_check_mark: **진행 기간**: 2022.12.23 - 2022.12.29
 
-### `yarn start`
+:white_check_mark: **팀 구성원** :runner: :runner: :runner:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  :yellow_heart: [박수빈](https://github.com/parksubin22)
+  :blue_heart: [손유진](https://github.com/YujeanSohn)
+  :heart: [이학준](https://github.com/LHJ6067)
+  
+:white_check_mark: **기술 스택**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<div align="start">
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+</div>
 
-### `yarn test`
+## 주제 선정 이유
+* 애니메이션이 자연스러운 상용화 서비스 UI 경험
+* 영상 컨텐츠를 다루는 프론트 작업 경험
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 클론 내역 및 분업
 
-### `yarn build`
+* 로그인 화면 (담당자: :heart:)
+* 회원가입 화면 (담당자: :heart:)
+* 홈 화면 (담당자: :blue_heart:)
+* 상세 모달창 화면 (담당자: :yellow_heart:)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 공통 컴포넌트
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* `Header` (담당자: :blue_heart:)
+* `Logo` (담당자: :blue_heart:)
+* `IconBtn` (담당자: :blue_heart:)
+* `RatingIcon` (담당자: :blue_heart:)
+* `RankingIcon` (담당자: :yellow_heart:)
+* `TextBtn` (담당자: :blue_heart:)
+* `ToggleMsg` (담당자: :blue_heart:)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 동영상 라이브러리
 
-### `yarn eject`
+[`react-player`](https://www.npmjs.com/package/react-player)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 와이어 프레임
+**로그인**
+![Untitled](https://user-images.githubusercontent.com/59635497/209922092-b315943c-2f27-4c38-afe6-6da1832ec901.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**회원가입**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+회원가입 화면은 시간 관계상 와이어프레임 제작을 생략했습니다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+넷플릭스의 결제 및 각종 동의 단계의 화면을 생략하고 
 
-## Learn More
+이메일, 비밀번호, 닉네임, 개인정보처리 동의 정보를 받는 하나의 회원가입 페이지로 구현했습니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**메인화면**
+![Untitled (1)](https://user-images.githubusercontent.com/59635497/209922061-51391924-6b91-4f21-adaf-9b0d0d31341e.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**상세모달창**
+![Untitled (2)](https://user-images.githubusercontent.com/59635497/209922086-99061ea7-01bf-4ada-8e5c-3d092666f07b.png)
