@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import user from "../modules/UserSlice";
-import movies from "../modules/MoviesSlice";
+import contents from "../modules/ContentsSlice";
 
 const store = configureStore({
-  reducer: { user: user, movies: movies },
+  reducer: { user: user, contents: contents },
 });
 
 export default store;

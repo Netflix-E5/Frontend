@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-function TextBtn({ text, size = "small", type }) {
+function TextBtn({ icon, text, size = "small", type, handler }) {
   return (
-    <Wrapper size={size} type={type}>
+    <Wrapper size={size} type={type} onClick={handler}>
+      <div>{icon}</div>
       {text}
     </Wrapper>
   );
@@ -37,6 +38,8 @@ const Wrapper = styled.button`
         return props.theme.accentColor;
       case "light":
         return "white";
+      case "transparent":
+        return props.theme.transparentBtnColor;
       default:
         return props.theme.accentColor;
     }
@@ -47,10 +50,17 @@ const Wrapper = styled.button`
         return "white";
       case "light":
         return "black";
+      case "transparent":
+        return "white";
       default:
         return "white";
     }
   }};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border: none;
   border-radius: 8px;
   font-size: 16px;
@@ -58,7 +68,9 @@ const Wrapper = styled.button`
   font-family: ${(props) => props.theme.bold};
 
   :hover {
-    text-decoration: underline;
+    text-decoration: ${(props) => (props.type === "light" ? "underline" : "")};
+    background-color: ${(props) =>
+      props.type === "transparent" ? "rgba(109, 109, 110, 0.4)" : ""};
   }
 `;
 
