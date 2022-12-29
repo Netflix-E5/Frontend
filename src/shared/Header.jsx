@@ -27,10 +27,7 @@ function Header() {
   ];
 
   const logout = () => {
-    localStorage.removeItem("access-token");
-    localStorage.removeItem("refresh-token");
-    localStorage.removeItem("nickname");
-    localStorage.removeItem("access-token-expiration");
+    localStorage.clear();
     window.location.reload();
   };
 
