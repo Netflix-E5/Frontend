@@ -18,7 +18,7 @@ export const __postSignIn = createAsyncThunk(
           Date.now() + 15 * 60 * 1000
         );
         window.alert("로그인 성공!");
-        window.location.href = "https://netflix-clone-xi-jade.vercel.app/";
+        window.location.href = "/";
         return thunkAPI.fulfillWithValue(response.data);
       }
     } catch (error) {
@@ -35,8 +35,7 @@ export const __postSignup = createAsyncThunk(
       const response = await userapi.signup(payload);
       if (response.status === 200) {
         window.alert("회원가입성공! 로그인페이지로 이동합니다");
-        window.location.href =
-          "https://netflix-clone-xi-jade.vercel.app/signin";
+        window.location.href = "/signin";
         return thunkAPI.fulfillWithValue(response.data);
       }
     } catch (error) {
