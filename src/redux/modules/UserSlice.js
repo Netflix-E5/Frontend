@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { userapi } from "../../apis/client";
 
-
 export const __postSignIn = createAsyncThunk(
   "postSignIn",
   async (payload, thunkAPI) => {
@@ -13,16 +12,19 @@ export const __postSignIn = createAsyncThunk(
           "refresh-token",
           response.headers["refresh-token"]
         );
-        localStorage.setItem("nickname", response.data.nickname);
+        localStorage.setItem("nickname", response.data.nickName);
+        localStorage.setItem(
+          "access-token-expiration",
+          Date.now() + 15 * 60 * 1000
+        );
         window.alert("로그인 성공!");
-        window.location.href = "http://localhost:3000/";
+        window.location.href("/");
         return thunkAPI.fulfillWithValue(response.data);
       }
     } catch (error) {
       window.alert(error.response.data.errorMessage);
       return thunkAPI.rejectWithValue(error.response.data.errorMessage);
     }
-
   }
 );
 
@@ -30,11 +32,10 @@ export const __postSignup = createAsyncThunk(
   "postSignup",
   async (payload, thunkAPI) => {
     try {
-     const response = await userapi.signup(payload);
-
+      const response = await userapi.signup(payload);
       if (response.status === 200) {
         window.alert("회원가입성공! 로그인페이지로 이동합니다");
-        window.location.href = "http://localhost:3000/signin";
+        window.location.href("/signin");
         return thunkAPI.fulfillWithValue(response.data);
       }
     } catch (error) {
@@ -57,9 +58,14 @@ const userSlice = createSlice({
     builder
       .addCase(__postSignIn.fulfilled, (state, action) => {
         state.response = action.payload;
+        state.error = action.null;
       })
       .addCase(__postSignup.fulfilled, (state, action) => {
         state.response = action.payload;
+        state.error = null;
+      })
+      .addCase(__postSignup.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

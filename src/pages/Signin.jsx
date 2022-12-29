@@ -144,7 +144,9 @@ const Signin = () => {
                     onBlur={passwordBlur}
                   ></Form.Control>
                   {showPasswordError && (
-                    <ErrorMsg>비밀번호는 6글자 이상입니다</ErrorMsg>
+                    <ErrorMsg>
+                      비밀번호는 8글자 이상의 특수문자가 포함되어야 합니다.
+                    </ErrorMsg>
                   )}
                 </FloatingLabel>
                 <SigninFormButton onClick={signinButton}>
