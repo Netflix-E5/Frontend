@@ -18,7 +18,7 @@ export const __postSignIn = createAsyncThunk(
           Date.now() + 15 * 60 * 1000
         );
         window.alert("로그인 성공!");
-        window.location.href = "https://netflix-clone-xi-jade.vercel.app/";
+        window.location.href = "/";
         return thunkAPI.fulfillWithValue(response.data);
       }
     } catch (error) {

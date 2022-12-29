@@ -9,7 +9,9 @@ export const noneTokenClient = axios.create({
 client.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("access-token");
-    config.headers["access-token"] = `${accessToken}`;
+    const refreshToken = localStorage.getItem("refresh-token");
+    config.headers["access-token"] = accessToken;
+    config.headers["refresh-token"] = refreshToken;
     return config;
   },
   function (error) {
