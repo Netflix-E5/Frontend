@@ -196,7 +196,7 @@ const Signup = () => {
           />
           {showPasswordError && (
             <ErrorMsg>
-              비빌번호는 특수문자가 섞인 여덟글자 이상이여야 합니다.
+              비빌번호는 여덟글자 이상, 특수문자가 포함되어야 합니다.
             </ErrorMsg>
           )}
         </FloatingLabel>
