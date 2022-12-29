@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import IconBtn from "../components/common/IconBtn";
@@ -21,11 +22,17 @@ function Home() {
   const genreList = useSelector((store) => store.contents.sortedByGenreList);
   const ratingList = useSelector((store) => store.contents.sortedByRatingList);
 
+  const navigate = useNavigate();
   useEffect(() => {
+    if (!isLogin()) navigate("/signin");
     dispatch(__getContentsByViewAsc());
     dispatch(__getContentsByGenre());
     dispatch(__getContentsByRating());
   }, []);
+
+  const isLogin = () => {
+    return localStorage.getItem("access-token");
+  };
 
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const handleVideoEnd = (v) => {
