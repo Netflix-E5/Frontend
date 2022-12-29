@@ -114,7 +114,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   background: ${(props) =>
     props.isMenuStyle
