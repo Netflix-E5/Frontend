@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "../components/common/Logo";
+import Logo from "../components/common/Logo.jsx";
 import TextBtn from "../components/common/TextBtn";
 
 function Header() {
@@ -25,6 +25,11 @@ function Header() {
     { icon: "", name: "고객센터" },
     { icon: "", name: "넷플릭스에서 로그아웃" },
   ];
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
 
   const navigate = useNavigate();
   return (
@@ -58,7 +63,13 @@ function Header() {
                 ))}
               </MenuWrapper>
             </Content>
+
             <Content>
+              <Usernickname>
+                {localStorage.getItem("nickname")
+                  ? `환영합니다 ${localStorage.getItem("nickname")}님`
+                  : null}
+              </Usernickname>
               <Profile>
                 <ProfileIcon
                   src="http://occ-0-1360-993.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABY20DrC9-11ewwAs6nfEgb1vrORxRPP9IGmlW1WtKuaLIz8VxCx5NryzDK3_ez064IsBGdXjVUT59G5IRuFdqZlCJCneepU.png?r=229"
@@ -70,7 +81,14 @@ function Header() {
                     <ProfileMenuCaret />
                     <ProfileMenuWrapper>
                       {userMenu.map((v) => (
-                        <ProfileMenu key={v.name}>{v.name}</ProfileMenu>
+                        <ProfileMenu
+                          key={v.name}
+                          onClick={
+                            v.name === "넷플릭스에서 로그아웃" ? logout : null
+                          }
+                        >
+                          {v.name}
+                        </ProfileMenu>
                       ))}
                     </ProfileMenuWrapper>
                   </ProfileToggle>
@@ -219,4 +237,8 @@ const ProfileMenu = styled.div`
   }
 `;
 
+const Usernickname = styled.span`
+  color: white;
+  font-size: 12px;
+`;
 export default Header;
