@@ -101,9 +101,8 @@ function PreviewModal({ contents, show }) {
             }
             config={{
               youtube: {
-                // TODO: edit origin to use https client domain
                 playerVars: {
-                  origin: "http://localhost:3000",
+                  origin: process.env.REACT_APP_URL,
                   fs: 0,
                   modestbranding: 1,
                 },
