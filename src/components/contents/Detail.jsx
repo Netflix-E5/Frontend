@@ -94,6 +94,15 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   muted={isMuted}
                   playing={true}
                   loop={true}
+                  config={{
+                    youtube: {
+                      playerVars: {
+                        origin: process.env.REACT_APP_URL,
+                        fs: 0,
+                        modestbranding: 1,
+                      },
+                    },
+                  }}
                 />
                 <div
                   style={{
