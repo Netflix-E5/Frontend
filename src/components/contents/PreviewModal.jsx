@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import IconBtn from "../common/IconBtn";
 import RatingIcon from "../common/RatingIcon";
 import ToggleMsg from "../common/ToggleMsg";
+import Detail from "./Detail";
 
 import defaultImg from "../../assets/img/test.jpg";
 
@@ -13,7 +14,6 @@ import {
   updateMute,
   __postCountViews,
 } from "../../redux/modules/ContentsSlice";
-import Detail from "./Detail";
 
 function PreviewModal({ contents, show }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
@@ -102,7 +102,7 @@ function PreviewModal({ contents, show }) {
             config={{
               youtube: {
                 playerVars: {
-                  origin: process.env.REACT_APP_URL,
+                  origin: process.env.REACT_APP_LOCAL,
                   fs: 0,
                   modestbranding: 1,
                 },
