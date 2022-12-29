@@ -58,11 +58,9 @@ const userSlice = createSlice({
     builder
       .addCase(__postSignIn.fulfilled, (state, action) => {
         state.response = action.payload;
-        state.error = action.null;
       })
       .addCase(__postSignup.fulfilled, (state, action) => {
         state.response = action.payload;
-        state.error = null;
       })
       .addCase(__postSignup.rejected, (state, action) => {
         state.error = action.payload;
