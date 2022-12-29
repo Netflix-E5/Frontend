@@ -97,7 +97,7 @@ const Detail = ({ show, closeHandler, id, ranking = 0 }) => {
                   config={{
                     youtube: {
                       playerVars: {
-                        origin: process.env.REACT_APP_URL,
+                        origin: process.env.REACT_APP_LOCAL,
                         fs: 0,
                         modestbranding: 1,
                       },
